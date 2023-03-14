@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import HeaderComp from "@/components/HeaderComp.vue";
 import FooterComp from "@/components/FooterComp.vue";
 
@@ -17,14 +16,6 @@ export default {
     HeaderComp,
     FooterComp,
   },
-  computed: {
-    ...mapGetters(['authenticated'])
-  },
-  mounted() {
-    if (this.authenticated) {
-      this.$router.push('/products');
-    }
-  }
 };
 </script>
 <style>

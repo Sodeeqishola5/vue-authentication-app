@@ -4,14 +4,14 @@
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
         <label for="username">Username</label>
-        <input type="username" id="username" v-model="username" required />
+        <input type="username" id="username" v-model="state.username" required />
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" v-model="password" required />
+        <input type="password" id="password" v-model="state.password" required autocomplete="new-password" />
       </div>
       <button type="submit">Login</button>
-      <p v-if="error" class="error">{{ error }}</p>
+      <p v-if="state.error" class="error">{{ state.error }}</p>
     </form>
   </div>
 </template>

@@ -1,42 +1,26 @@
 <template>
-  <div class="profile">
-    <h1>Profile</h1>
-    <p>Username: {{ currentUser.username }}</p>
-    <p>Email: {{ currentUser.email }}</p>
-    <button @click="logout">Logout</button>
+  <div>
+    <h1>Profile View</h1>
+    <p>Name: {{ user.username }}</p>
+    <p>Email: {{ user.email }}</p>
   </div>
 </template>
 
 <script>
-import { computed } from 'vue'
-import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
+import { defineComponent } from 'vue'
+import { useCurrentUser } from '../composables/useCurrentUser'
 
-export default {
+export default defineComponent({
   name: 'ProfileView',
   setup() {
-    const store = useStore()
-    const router = useRouter()
-
-    const currentUser = computed(() => store.getters.currentUser)
-
-    const logout = () => {
-      store.dispatch('logout')
-      router.push('/login')
-    }
+    const { user } = useCurrentUser()
 
     return {
-      currentUser,
-      logout
+      user
     }
   }
-}
+})
 </script>
 
 <style scoped>
-.profile {
-  margin: 50px auto;
-  max-width: 600px;
-  text-align: center;
-}
 </style>

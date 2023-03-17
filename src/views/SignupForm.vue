@@ -4,15 +4,15 @@
     <form @submit.prevent="handleSignup">
       <div class="form-group">
         <label for="username">Username</label>
-        <input type="username" id="username" v-model="username" required />
+        <input type="username" id="username" v-model="username" required autocomplete="username" />
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" id="email" v-model="email" required />
+        <input type="email" id="email" v-model="email" required autocomplete="email" />
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" v-model="password" required />
+        <input type="password" id="password" v-model="password" required autocomplete="new-password" />
       </div>
       <div class="form-group">
         <label for="confirmPassword">Confirm Password</label>
@@ -21,6 +21,7 @@
           id="confirmPassword"
           v-model="confirmPassword"
           required
+          autocomplete="confirmPassword"
         />
       </div>
       <button type="submit">Sign up</button>

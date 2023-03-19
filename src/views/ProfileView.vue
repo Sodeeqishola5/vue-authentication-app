@@ -1,26 +1,30 @@
 <template>
   <div>
     <h1>Profile View</h1>
-    <p>Name: {{ user.username }}</p>
-    <p>Email: {{ user.email }}</p>
+    <p>Username: {{ currentUser.username }}</p>
+    <p>Email: {{ currentUser.email }}</p>
+    <button @click="logout">Logout</button>
   </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
-import { useCurrentUser } from '../composables/useCurrentUser'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+import { useCurrentUser } from '@/composables/useCurrentUser'
 
-export default defineComponent({
+export default {
   name: 'ProfileView',
   setup() {
-    const { user } = useCurrentUser()
+    const store = useStore()
+    const router = useRouter()
+    const currentUser = useCurrentUser()
 
-    return {
-      user
+    const logout = async () => {
+      await store.dispatch('auth/logout')
+      router.push({ name: 'Login' })
     }
-  }
-})
-</script>
 
-<style scoped>
-</style>
+    return { currentUser, logout }
+  }
+}
+</script>

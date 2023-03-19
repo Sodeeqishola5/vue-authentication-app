@@ -1,37 +1,29 @@
 <template>
   <div>
-    <h1>{{ product.title }}</h1>
+    <h1>{{ product.name }}</h1>
     <p>{{ product.description }}</p>
-    <p>Price: ${{ product.price }}</p>
+    <p>{{ product.price }}</p>
   </div>
 </template>
 
 <script>
-import { computed, defineComponent } from 'vue'
-import { useStore } from 'vuex'
+import { ref, onMounted } from "vue";
+import axios from "axios";
+import { useRoute } from "vue-router";
 
-export default defineComponent({
-  name: 'ProductDetails',
-  props: {
-    id: {
-      type: Number,
-      required: true
-    }
-  },
-  setup(props) {
-    const store = useStore()
-
-    const product = computed(() => {
-      const products = store.state.products
-      return products.find(p => p.id === props.id)
-    })
+export default {
+  setup() {
+    const product = ref(null);
+    const route = useRoute();
+    const { id } = route.params;
+    onMounted(async () => {
+      const response = await axios.get(`https://dummyjson.com/products/${id}`);
+      product.value = response.data;
+    });
 
     return {
-      product
-    }
-  }
-})
+      product,
+    };
+  },
+};
 </script>
-
-<style scoped>
-</style>

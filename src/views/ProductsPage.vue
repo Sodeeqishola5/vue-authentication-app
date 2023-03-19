@@ -1,31 +1,36 @@
 <template>
   <div>
-    <h1>Products Page</h1>
+    <h1>Products</h1>
     <ul>
       <li v-for="product in products" :key="product.id">
-        <router-link :to="'/products/'+product.id">{{product.title}}</router-link>
+        <router-link
+          :to="{ name: 'ProductDetails', params: { id: product.id } }"
+          >{{ product.name }}</router-link
+        >
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import { computed, defineComponent } from 'vue'
-import { useStore } from 'vuex'
+import { ref, onMounted } from "vue";
+import axios from "axios";
+import { useCurrentUser } from "@/composables/useCurrentUser";
 
-export default defineComponent({
-  name: 'ProductsPage',
+export default {
   setup() {
-    const store = useStore()
+    const products = ref([]);
+    const { currentUser } = useCurrentUser();
 
-    const products = computed(() => store.state.products)
+    onMounted(async () => {
+      const response = await axios.get("https://dummyjson.com/products");
+      products.value = response.data;
+    });
 
     return {
-      products
-    }
-  }
-})
+      products,
+      currentUser,
+    };
+  },
+};
 </script>
-
-<style scoped>
-</style>
